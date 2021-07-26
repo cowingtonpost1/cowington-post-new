@@ -12,7 +12,6 @@ import Link from 'next/link'
 export default function ProductSimple(props) {
     return (
         <Link href={props.href}>
-            <Center py={12}>
                 <Box
                     role={'group'}
                     p={6}
@@ -66,7 +65,6 @@ export default function ProductSimple(props) {
                         </Heading>
                     </Stack>
                 </Box>
-            </Center>
         </Link>
     )
 }

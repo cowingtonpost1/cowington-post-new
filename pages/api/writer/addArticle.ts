@@ -11,6 +11,7 @@ import VerificationToken from '../../../models/verificationtoken.model'
 interface RequestData {
     title: String
     content: String
+    topic: String
 }
 export const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -36,7 +37,7 @@ export default requireSession(async (req, res) => {
                 writer: user2.emailAddresses[0].emailAddress,
                 date_created: Date.now(),
                 date_posted: Date.now(),
-                topic: 'cow',
+                topic: data.topic[0],
             }).save()
 
             const dbArticle = await article
@@ -83,6 +84,7 @@ export default requireSession(async (req, res) => {
                 )
             } else {
                 dbArticle.posted = true
+                dbArticle.date_posted = true
             }
             res.status(200).json({ success: true })
         } catch (err) {

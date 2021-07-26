@@ -15,13 +15,23 @@ const WriterButton = () => {
         </div>
     )
 }
-
+const AdminButton = () => {
+    const user = useUser()
+    return (
+        <>
+            {(user.publicMetadata.admin)&&(
+                <Nav.Link href="/admin">
+                    Admin
+                </Nav.Link>
+            )}
+        </>
+    )
+}
 
 function CowingtonNavbar() {
     return (
         <div>
             <Navbar bg="light" expand="lg">
-                <Container>
                     <Navbar.Brand>
                         <Link href="/">Cowington Post</Link>
                     </Navbar.Brand>
@@ -35,6 +45,7 @@ function CowingtonNavbar() {
                             </SignedOut>
                             <SignedIn>
                                 <WriterButton />
+                                <AdminButton/>
                             </SignedIn>
                             {/* <NavDropdown
                                 title="Dropdown"
@@ -59,7 +70,6 @@ function CowingtonNavbar() {
                             <UserButton></UserButton>
                         </Nav>
                     </Navbar.Collapse>
-                </Container>
             </Navbar>
         </div>
     )

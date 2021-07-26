@@ -2,6 +2,13 @@ import Head from 'next/head'
 const Meta = ({ title, keywords, description }) => {
     return (
         <Head>
+            <script
+                async
+                defer
+                data-domain="cowingtonpost.tk"
+                src="http://cowwars.serveminecraft.net:8000/js/plausible.js"
+            ></script>
+
             <meta
                 name="viewport"
                 content="width=device-width, initial-scale=1"

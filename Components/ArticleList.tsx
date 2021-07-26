@@ -1,16 +1,19 @@
 import React from 'react'
-import ArticleItem from './ArticleItem'
+import NewArticleItem from './NewArticleItem'
 import articleStyles from '../styles/Article.module.css'
-import { Row, Container } from 'react-bootstrap'
+import {
+    SimpleGrid,
+    Box
+} from '@chakra-ui/react'
 const ArticleList = ({ articles }) => {
     return (
-        <Container>
+        <SimpleGrid>
             {articles.map((article) => (
-                    <Row className={articleStyles.articleCard}>
-                        <ArticleItem article={article} />
-                    </Row>
+                    <Box key={article._id}>
+                        <NewArticleItem article={article} />
+                    </Box>
             ))}
-        </Container>
+        </SimpleGrid>
     )
 }
 export default ArticleList

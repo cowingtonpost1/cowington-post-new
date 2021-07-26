@@ -1,4 +1,7 @@
+import { Button, Box, SimpleGrid, Input } from '@chakra-ui/react'
+import {useAlert} from 'react-alert'
 export default function Upload() {
+    const alert = useAlert()
     const uploadPhoto = async (e) => {
         const file = e.target.files[0]
         const filename = encodeURIComponent(file.name)
@@ -16,20 +19,22 @@ export default function Upload() {
         })
 
         if (upload.ok) {
-            console.log('Uploaded successfully!')
+            console.log('Uploaded successfully!', {type: "success"})
+            alert.show("Uploaded Successfully")
         } else {
             console.error('Upload failed.')
+            alert.show("Upload Failed", {type: "error"})
         }
     }
 
     return (
-        <>
+        <SimpleGrid>
             <p>Upload a .png or .jpg image (max 1MB).</p>
-            <input
-                onChange={uploadPhoto}
+            <Input
                 type="file"
+                onChange={uploadPhoto}
                 accept="image/png, image/jpeg"
             />
-        </>
+        </SimpleGrid>
     )
 }

@@ -19,14 +19,11 @@
     width: 45%;
 }
 
-.articleCard {
-    margin-top: 5%;
-}
 
 .articleCard:focus,
 .articleCard:active,
 .articleCard:hover {
-    border-color:#0070f3;
+    border-color: #0070f3;
 }
 
 .card:hover,

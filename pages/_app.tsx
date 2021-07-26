@@ -10,7 +10,15 @@ import {
     SignedOut,
 } from '@clerk/clerk-react'
 import { useRouter } from 'next/router'
-import { ChakraProvider } from '@chakra-ui/react'
+import {
+    ChakraProvider,
+    Alert,
+    AlertIcon,
+    AlertTitle,
+    AlertDescription,
+    CloseButton,
+} from '@chakra-ui/react'
+import { Provider as AlertProvider } from 'react-alert'
 
 // Retrieve Clerk settings from the environment
 const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API
@@ -23,7 +31,27 @@ const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API
  *  "/foo/bar"       for pages/foo/bar.js
  *  "/foo/[...bar]"  for pages/foo/[...bar].js
  */
-const privatePages = ['/writer']
+const privatePages = ['/writer', '/admin']
+
+const AlertTemplate = ({ style, options, message, close }) => (
+    <>
+        <div style={style}>
+            {options.type === 'info' && '!'}
+            {options.type === 'success' && ':)'}
+            {options.type === 'error' && ':('}
+            {message}
+            <button onClick={close}>X</button>
+        </div>
+        <Alert style={style} status={options.type}>
+            <AlertIcon />
+            <AlertTitle mr={2}>{message}</AlertTitle>
+            {/* <AlertDescription>
+                Your Chakra experience may be degraded.
+            </AlertDescription> */}
+            <CloseButton position="absolute" right="8px" top="8px" />
+        </Alert>
+    </>
+)
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter()
@@ -37,20 +65,22 @@ function MyApp({ Component, pageProps }) {
                 frontendApi={clerkFrontendApi}
                 navigate={(to) => router.push(to)}
             >
-                <Layout>
-                    {!(privatePages.includes(router.pathname)) ? (
-                        <Component {...pageProps} />
-                    ) : (
-                        <>
-                            <SignedIn>
-                                <Component {...pageProps} />
-                            </SignedIn>
-                            <SignedOut>
-                                <RedirectToSignIn />
-                            </SignedOut>
-                        </>
-                    )}
-                </Layout>
+                <AlertProvider template={AlertTemplate}>
+                    <Layout>
+                        {!privatePages.includes(router.pathname) ? (
+                            <Component {...pageProps} />
+                        ) : (
+                            <>
+                                <SignedIn>
+                                    <Component {...pageProps} />
+                                </SignedIn>
+                                <SignedOut>
+                                    <RedirectToSignIn />
+                                </SignedOut>
+                            </>
+                        )}
+                    </Layout>
+                </AlertProvider>
             </ClerkProvider>
         </ChakraProvider>
     )

@@ -2,18 +2,19 @@ import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { server } from "../../../config";
-import {Text} from '@chakra-ui/react'
+import {Heading, Text} from '@chakra-ui/react'
 const article = ({ article }) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
   const { id } = router.query;
   return (
     <>
-      <Text fontSize={80}>{article.title}</Text>
+      <Heading>{article.title}</Heading>
+      <Text>Posted at {article.date_posted}</Text>
+      <br></br>
       <div dangerouslySetInnerHTML={{__html: article.content}}></div>
       <br />
-      This is article {article.id}
-      <Link href="/">Go Back</Link>
+      <Link href={"/topic/"+article.topic}>Go Back</Link>
     </>
   );
 };

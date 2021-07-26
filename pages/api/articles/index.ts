@@ -7,8 +7,11 @@ export default async function handler(
 ) {
     await dbConnect()
     try {
-        const articles = await Article.find({}) /* find all the data in our database */
-        res.status(200).json({ success: true, data: articles })
+        const articles = Article.find({}).sort({
+            date_created: 'desc',
+        }) /* find all the data in our database */
+        const mooArticles = await articles
+        res.status(200).json(mooArticles)
     } catch (error) {
         res.status(400).json({ success: false })
     }
