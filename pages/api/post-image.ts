@@ -18,15 +18,15 @@ export default requireSession(async function handler(req, res) {
     const user2 = await user
     if (user2.publicMetadata.writer) {
         aws.config.update({
-            accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            region: process.env.REGION,
+            accessKeyId: process.env.AWS_ACCESS_KEY_ID_COW,
+            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_COW,
+            region: process.env.AWS_REGION_COW,
             signatureVersion: 'v4',
         })
 
         const s3 = new aws.S3()
         const post = await s3.createPresignedPost({
-            Bucket: process.env.AWS_STORAGE_BUCKET_NAME,
+            Bucket: process.env.AWS_STORAGE_BUCKET_NAME_COW,
             Fields: {
                 key:
                     Math.random().toString(36).substring(2, 15) +
