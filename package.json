@@ -24,7 +24,6 @@
     "aws-sdk": "^2.951.0",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
-    "draftjs-to-html": "^0.9.1",
     "eslint-config-prettier": "^8.3.0",
     "framer-motion": "^4.1.17",
     "isomorphic-unfetch": "^3.1.0",
