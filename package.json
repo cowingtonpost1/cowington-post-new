@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^1.5.0",
     "@aws-cdk/aws-s3": "^1.115.0",
     "@aws-cdk/core": "^1.115.0",
     "@chakra-ui/icons": "^1.0.14",
@@ -21,10 +20,6 @@
     "@clerk/clerk-sdk-node": "^0.5.0",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
-    "@types/auth0": "^2.33.4",
-    "@types/draft-js": "^0.11.4",
-    "@types/nodemailer": "^6.4.4",
-    "@types/redis": "^2.8.31",
     "aws-cdk": "^1.115.0",
     "aws-sdk": "^2.951.0",
     "axios": "^0.21.1",
@@ -55,7 +50,9 @@
   },
   "devDependencies": {
     "@types/node": "^16.3.3",
+    "@types/nodemailer": "^6.4.4",
     "@types/react": "^17.0.14",
+    "@types/redis": "^2.8.31",
     "autoprefixer": "^10.3.1",
     "eslint": "7.30.0",
     "eslint-config-next": "11.0.1",

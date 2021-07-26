@@ -22,7 +22,7 @@ export default function Home() {
             <Box p={2} minWidth={minimumWidth} maxWidth={maximumWidth}>
             <NewTopicCard4
                 title="Computer news"
-                image="/cowimg.png"
+                image="/computerimg.jpg"
                 href="/topic/computer"
             />
             </Box>

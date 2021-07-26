@@ -7,6 +7,8 @@ import { server } from '../../../config/index'
 import nodemailer from 'nodemailer'
 import VerificationToken from '../../../models/verificationtoken.model'
 import redisConnect from '../../../utils/redisConnect'
+import sanitizeHtml from 'sanitize-html'
+
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 interface RequestData {
@@ -24,6 +26,10 @@ export const transporter = nodemailer.createTransport({
 export default requireSession(async (req, res) => {
     await dbConnect()
     const data: RequestData = req.body
+    // data.content = sanitizeHtml(data.content)
+    // data.content = sanitizeHtml(data.content, {
+        // allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+    // })
     const user = users.getUser(req.session.userId)
     const user2 = await user
     if (user2.publicMetadata.writer || user2.publicMetadata.admin) {
@@ -85,7 +91,7 @@ export default requireSession(async (req, res) => {
                 )
             } else {
                 dbArticle.posted = true
-                dbArticle.date_posted = Date.now() 
+                dbArticle.date_posted = Date.now()
                 const redis = redisConnect()
                 redis.flushdb()
             }
