@@ -55,7 +55,7 @@ const formats = [
 export const WriterPage = () => {
     const myRef = useRef()
     const [text, setText] = useState('')
-    const [selection, setSelection] = useState('')
+    const [selection, setSelection] = useState('cow')
 
     // console.log(quill)
     // Quill.register('modules/imageResize', ImageResize)
@@ -101,7 +101,8 @@ export const WriterPage = () => {
                                 e.target.selectedOptions,
                                 (option) => option.value
                             )
-                            setSelection(value)
+                            console.log(value)
+                            setSelection(value[0])
                         }}
                     >
                         <option value="cow">Cow News</option>
@@ -118,7 +119,7 @@ export const WriterPage = () => {
                                 url: server + '/api/writer/addArticle',
                                 data: {
                                     title: myRef.current.value,
-                                    content: text,
+                                    content: quillRef.current.innerHTML,
                                     topic: selection,
                                 },
                             })
