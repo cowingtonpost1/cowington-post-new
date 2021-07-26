@@ -119,7 +119,7 @@ export const WriterPage = () => {
                                 url: server + '/api/writer/addArticle',
                                 data: {
                                     title: myRef.current.value,
-                                    content: quillRef.current.innerHTML,
+                                    content: quill.root.innerHTML,
                                     topic: selection,
                                 },
                             })
