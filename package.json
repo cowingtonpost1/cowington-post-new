@@ -24,6 +24,7 @@
     "@types/auth0": "^2.33.4",
     "@types/draft-js": "^0.11.4",
     "@types/nodemailer": "^6.4.4",
+    "@types/redis": "^2.8.31",
     "aws-cdk": "^1.115.0",
     "aws-sdk": "^2.951.0",
     "axios": "^0.21.1",
@@ -48,6 +49,7 @@
     "react-dom": "17.0.2",
     "react-icons": "^4.2.0",
     "react-quilljs": "^1.2.15",
+    "redis": "^3.1.2",
     "sanitize-html": "^2.4.0",
     "swr": "^0.5.6"
   },

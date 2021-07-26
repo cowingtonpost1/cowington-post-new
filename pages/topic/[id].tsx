@@ -11,6 +11,7 @@ export const NewsPage = ({ articles }) => {
 }
 
 export async function getServerSideProps(content) {
+
     // const res = await fetch(server + `/api/articles/` id)
     const res = await fetch(server + `/api/topic/` + content.params.id)
     const articles = await res.json()

@@ -6,6 +6,7 @@ import dbConnect from '../../../utils/dbConnect'
 import { server } from '../../../config/index'
 import nodemailer from 'nodemailer'
 import VerificationToken from '../../../models/verificationtoken.model'
+import redisConnect from '../../../utils/redisConnect'
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 interface RequestData {
@@ -84,7 +85,9 @@ export default requireSession(async (req, res) => {
                 )
             } else {
                 dbArticle.posted = true
-                dbArticle.date_posted = true
+                dbArticle.date_posted = Date.now() 
+                const redis = redisConnect()
+                redis.flushdb()
             }
             res.status(200).json({ success: true })
         } catch (err) {

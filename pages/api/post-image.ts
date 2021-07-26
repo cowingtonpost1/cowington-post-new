@@ -2,9 +2,10 @@ import aws from 'aws-sdk'
 import nodemailer from 'nodemailer'
 import ImageVerificationToken from '../../models/ImageVerificationToken'
 import { requireSession, users } from '@clerk/clerk-sdk-node'
-import {server} from '../../config/index'
+import { server } from '../../config/index'
 import Image from '../../models/image.model'
 import dbConnect from '../../utils/dbConnect'
+import redisConnect from '../../utils/redisConnect'
 export const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -43,7 +44,7 @@ export default requireSession(async function handler(req, res) {
         const image = new Image({
             date_created: Date.now(),
             url: post.url + '/' + post.fields.key,
-            posted: false
+            posted: false,
         }).save()
 
         const dbImage = await image
@@ -73,7 +74,9 @@ export default requireSession(async function handler(req, res) {
                     subject: 'New article needs verification',
                     html: `<h1>New image posted by ${
                         user2.username
-                    } and with the contents of</h1><img src=${dbImage.url}></img> <a href=${
+                    } and with the contents of</h1><img src=${
+                        dbImage.url
+                    }></img> <a href=${
                         server + '/api/verify/' + acceptToken
                     }>Click this link to accept the article</a><br></br><a href=${
                         server + '/api/verify/' + denyToken
@@ -86,11 +89,12 @@ export default requireSession(async function handler(req, res) {
         } else {
             dbImage.posted = true
             dbImage.date_posted = Date.now()
+            const redis = redisConnect()
+            redis.flushdb()
         }
 
         res.status(200).json(post)
     } else {
         res.status(401)
     }
-
 })

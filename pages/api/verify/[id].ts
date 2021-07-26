@@ -4,6 +4,7 @@ import VerificationToken from '../../../models/verificationtoken.model'
 import ImageVerificationToken from '../../../models/verificationtoken.model'
 import Image from '../../../models/image.model'
 import dbConnect from '../../../utils/dbConnect'
+import redisConnect from '../../../utils/redisConnect'
 
 export default async function handler({ query: { id } }, res: NextApiResponse) {
     await dbConnect()
@@ -18,6 +19,8 @@ export default async function handler({ query: { id } }, res: NextApiResponse) {
         if (token.accpet) {
             article.posted = true
             article.date_posted = Date.now()
+            const redis = redisConnect()
+            redis.flushdb()
         }
     } else {
         const imageQuery = Image.findOne({ _id: imagetoken.imageId })
@@ -25,7 +28,9 @@ export default async function handler({ query: { id } }, res: NextApiResponse) {
 
         if (imagetoken.accept) {
             image.posted = true
-            image.date_posted = Date.now
+            image.date_posted = Date.now()
+            const redis = redisConnect()
+            redis.flushdb()
         }
     }
 
