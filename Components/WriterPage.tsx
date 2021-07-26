@@ -89,7 +89,7 @@ export const WriterPage = () => {
                         modules={modules}
                         formats={formats}
                     /> */}
-                    <Box width={500} height={300}>
+                    <Box width={500} height={300} marginBottom={'5.5rem'}>
                         <div ref={quillRef}></div>
                     </Box>
                 </Form.Group>
