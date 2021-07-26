@@ -14,14 +14,14 @@ export default function Home() {
             {/* <NewTopicCard3 title="Cow news" image="/cowimg.png" /> */}
             <Box p={2} minWidth={minimumWidth} maxWidth={maximumWidth} marginBottom={'2rem'}>
                 <NewTopicCard4
-                    title="Cow news"
+                    title="Cow News"
                     image="/cowimg.png"
                     href="/topic/cow"
                 />
             </Box>
             <Box p={2} minWidth={minimumWidth} maxWidth={maximumWidth}>
             <NewTopicCard4
-                title="Computer news"
+                title="Computer News"
                 image="/computerimg.jpg"
                 href="/topic/computer"
             />
