@@ -8,6 +8,7 @@ import { Form, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { server } from '../config/index'
 import { Select, Box, Input } from '@chakra-ui/react'
+import {useAlert} from 'react-alert'
 
 const modules = {
     ImageResize: {},
@@ -61,7 +62,7 @@ export const WriterPage = () => {
     // Quill.register('modules/imageResize', ImageResize)
 
     const { quill, quillRef } = useQuill({theme: "snow"})
-    
+    const alert = useAlert()
     // Insert Image(selected by user) to quill
 
     function handleChange(value) {
@@ -124,9 +125,11 @@ export const WriterPage = () => {
                                 },
                             })
                                 .then((err) => {
+                                    alert.show("Your article has been submitted for review.")
                                     console.log(err)
                                 })
                                 .catch((err) => {
+                                    alert.show("An Error occured.")
                                     console.log(err)
                                 })
                         }}
