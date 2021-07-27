@@ -44,7 +44,7 @@ export default requireSession(async (req, res) => {
                 writer: user2.emailAddresses[0].emailAddress,
                 date_created: Date.now(),
                 date_posted: Date.now(),
-                topic: data.topic[0],
+                topic: data.topic,
             }).save()
 
             const dbArticle = await article
@@ -93,7 +93,7 @@ export default requireSession(async (req, res) => {
                 dbArticle.posted = true
                 dbArticle.date_posted = Date.now()
                 const redis = redisConnect()
-                redis.flushdb()
+                redis.del("/api/topic/"+dbArticle.topic)
             }
             res.status(200).json({ success: true })
         } catch (err) {

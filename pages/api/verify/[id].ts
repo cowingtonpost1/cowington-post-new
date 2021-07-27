@@ -20,7 +20,7 @@ export default async function handler({ query: { id } }, res: NextApiResponse) {
             article.posted = true
             article.date_posted = Date.now()
             const redis = redisConnect()
-            redis.flushdb()
+            redis.del("/api/topic/"+article.topic)
         }
     } else {
         const imageQuery = Image.findOne({ _id: imagetoken.imageId })
@@ -30,7 +30,7 @@ export default async function handler({ query: { id } }, res: NextApiResponse) {
             image.posted = true
             image.date_posted = Date.now()
             const redis = redisConnect()
-            redis.flushdb()
+            redis.del("/api/images")
         }
     }
 
