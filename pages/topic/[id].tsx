@@ -3,6 +3,9 @@ import React from 'react'
 import { GetServerSideProps } from 'next'
 import { server } from '../../config'
 import ArticleList from '../../Components/ArticleList'
+import createFetch from '@vercel/fetch'
+import * as Fetch from 'node-fetch'
+const fetch = createFetch(Fetch)
 
 export const NewsPage = ({ articles }) => {
     const router = useRouter()
