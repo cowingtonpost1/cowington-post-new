@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 export default function ProductSimple(props) {
     return (
-        <Link href={props.href} prefetch={true} passHref>
+        <Link href={props.href} passHref>
             <Box
                 role={'group'}
                 p={6}

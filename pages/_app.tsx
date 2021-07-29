@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import Layout from '../Components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'tailwindcss/tailwind.css'
 import '../styles/globals.css'
 import {
     ClerkProvider,

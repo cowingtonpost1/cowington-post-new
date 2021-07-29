@@ -22,7 +22,7 @@ import Link from 'next/link'
 
 export function ArticleCard({ article }) {
     return (
-        <Link href={'/article/' + article._id}>
+        <Link href={'/article/' + article._id} passHref>
             <Center py={6}>
                 <Box
                     maxW={'445px'}
@@ -49,12 +49,11 @@ export function ArticleCard({ article }) {
     )
 }
 
-
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
 export const AdminPage = ({ articles }) => {
     const { data, error } = useSWR('/api/articles/', fetcher)
-    console.log(data,error)
+    console.log(data, error)
     const user = useUser()
     if (!user.publicMetadata.admin) {
         return <Heading>Permission Denied</Heading>
@@ -73,10 +72,15 @@ export const AdminPage = ({ articles }) => {
                     <TabPanel>
                         {data && (
                             <>
-                            <h1>Hello</h1>
-                            {data.map((article) => (
-                                <ArticleCard article={article} key={article._id}>{article.content}</ArticleCard>
-                            ))}
+                                <h1>Hello</h1>
+                                {data.map((article) => (
+                                    <ArticleCard
+                                        article={article}
+                                        key={article._id}
+                                    >
+                                        {article.content}
+                                    </ArticleCard>
+                                ))}
                             </>
                         )}
                         {/* {data.map((article) => (
