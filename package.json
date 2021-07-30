@@ -19,7 +19,6 @@
     "@clerk/clerk-sdk-node": "^0.5.0",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11.3.0",
-    "@vercel/fetch": "^6.1.1",
     "aws-cdk": "^1.115.0",
     "aws-sdk": "^2.951.0",
     "axios": "^0.21.1",
