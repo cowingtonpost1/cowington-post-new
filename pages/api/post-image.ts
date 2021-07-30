@@ -41,10 +41,11 @@ export default requireSession(async function handler(req, res) {
             ],
         })
 
+        const isPosted = user2.publicMetadata.admin || false
         const image = new Image({
             date_created: Date.now(),
             url: post.url + '/' + post.fields.key,
-            posted: false,
+            posted: isPosted,
         }).save()
 
         const dbImage = await image
