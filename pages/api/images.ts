@@ -8,7 +8,9 @@ export default async function handler(
 ) {
     const images = await getOrSetCache('/api/images', async () => {
         await dbConnect()
-        const imageQuery = Image.find({ posted: true })
+        const imageQuery = Image.find({ posted: true }).sort({
+            date_posted: 'descending',
+        })
 
         const images = await imageQuery
         return images

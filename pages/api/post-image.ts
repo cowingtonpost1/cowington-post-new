@@ -89,6 +89,7 @@ export default requireSession(async function handler(req, res) {
         } else {
             dbImage.posted = true
             dbImage.date_posted = Date.now()
+            dbImage.save()
             const redis = redisConnect()
             redis.flushdb()
         }

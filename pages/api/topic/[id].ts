@@ -9,7 +9,7 @@ export default async function handler({ query: { id } }, res: NextApiResponse) {
         await dbConnect()
         var mooArticles
         const filtered = Article.find({ topic: id, posted: true }).sort({
-            date_created: 'descending',
+            date_posted: 'descending',
         })
         mooArticles = await filtered
         return mooArticles

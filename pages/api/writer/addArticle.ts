@@ -28,7 +28,7 @@ export default requireSession(async (req, res) => {
     const data: RequestData = req.body
     // data.content = sanitizeHtml(data.content)
     // data.content = sanitizeHtml(data.content, {
-        // allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+    // allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
     // })
     const user = users.getUser(req.session.userId)
     const user2 = await user
@@ -92,8 +92,9 @@ export default requireSession(async (req, res) => {
             } else {
                 dbArticle.posted = true
                 dbArticle.date_posted = Date.now()
+                dbArticle.save()
                 const redis = redisConnect()
-                redis.del("/api/topic/"+dbArticle.topic)
+                redis.del('/api/topic/' + dbArticle.topic)
             }
             res.status(200).json({ success: true })
         } catch (err) {
