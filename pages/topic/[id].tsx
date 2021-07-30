@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { GetServerSideProps } from 'next'
@@ -13,13 +12,8 @@ export const NewsPage = ({ articles }) => {
 
 export async function getServerSideProps(content) {
     // const res = await fetch(server + `/api/articles/` id)
-    // const res = await fetch(server + `/api/topic/` + content.params.id)
-    var articles
-    const res = await axios
-        .get(server + '/api/topic/' + content.params.id)
-        .then((res) => {
-            articles = res.data
-        })
+    const res = await fetch(server + `/api/topic/` + content.params.id)
+    const articles = await res.json()
     console.log(articles)
     return {
         props: {
