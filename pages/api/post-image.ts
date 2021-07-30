@@ -48,7 +48,6 @@ export default requireSession(async function handler(req, res) {
         }).save()
 
         const dbImage = await image
-        dbImage.posted = false
         if (!user2.publicMetadata.admin) {
             const acceptToken =
                 Math.random().toString(36).substring(2, 15) +
