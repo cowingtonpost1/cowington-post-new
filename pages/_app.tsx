@@ -33,23 +33,19 @@ const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API
 const privatePages = ['/writer', '/admin']
 
 const AlertTemplate = ({ style, options, message, close }) => (
-    <>
-        <div style={style}>
-            {options.type === 'info' && '!'}
-            {options.type === 'success' && ':)'}
-            {options.type === 'error' && ':('}
-            {message}
-            <button onClick={close}>X</button>
-        </div>
-        <Alert style={style} status={options.type}>
-            <AlertIcon />
-            <AlertTitle mr={2}>{message}</AlertTitle>
-            {/* <AlertDescription>
+    <Alert style={style} status={options.type}>
+        <AlertIcon />
+        <AlertTitle mr={2}>{message}</AlertTitle>
+        {/* <AlertDescription>
                 Your Chakra experience may be degraded.
             </AlertDescription> */}
-            <CloseButton position="absolute" right="8px" top="8px" />
-        </Alert>
-    </>
+        <CloseButton
+            position="absolute"
+            right="8px"
+            top="8px"
+            onClick={close}
+        />
+    </Alert>
 )
 
 function MyApp({ Component, pageProps }) {
