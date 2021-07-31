@@ -11,6 +11,7 @@ import {
     Stack,
     SimpleGrid,
     useColorModeValue,
+    IconButton,
 } from '@chakra-ui/react'
 import { server } from '../config/index'
 import { useUser, SignedIn } from '@clerk/clerk-react'
@@ -19,20 +20,21 @@ import useSWR from 'swr'
 import ArticleList from './ArticleList'
 import Image from 'next/image'
 import Link from 'next/link'
+import { EditIcon } from '@chakra-ui/icons'
 
 export function ArticleCard({ article }) {
     return (
-        <Link href={'/article/' + article._id} passHref>
-            <Center py={6}>
-                <Box
-                    maxW={'445px'}
-                    w={'full'}
-                    bg={useColorModeValue('white', 'gray.900')}
-                    boxShadow={'2xl'}
-                    rounded={'md'}
-                    p={6}
-                    overflow={'hidden'}
-                >
+        <Center py={6}>
+            <Box
+                maxW={'445px'}
+                w={'full'}
+                bg={useColorModeValue('white', 'gray.900')}
+                boxShadow={'2xl'}
+                rounded={'md'}
+                p={6}
+                overflow={'hidden'}
+            >
+                <Link href={'/article/' + article._id} passHref>
                     <Stack>
                         <Heading
                             color={useColorModeValue('gray.700', 'white')}
@@ -43,17 +45,19 @@ export function ArticleCard({ article }) {
                         </Heading>
                         <Text>Posted At {article.date_posted}</Text>
                     </Stack>
-                </Box>
-            </Center>
-        </Link>
+                </Link>
+                <Link href={'/editarticle/' + article._id} passHref>
+                    <IconButton aria-label="Edit Article" icon={<EditIcon />} />
+                </Link>
+            </Box>
+        </Center>
     )
 }
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-export const AdminPage = ({ articles }) => {
+export const AdminPage = () => {
     const { data, error } = useSWR('/api/articles/', fetcher)
-    console.log(data, error)
     const user = useUser()
     if (!user.publicMetadata.admin) {
         return <Heading>Permission Denied</Heading>

@@ -19,9 +19,8 @@ import {
     useColorMode,
 } from '@chakra-ui/react'
 import { SignedIn, UserButton, useUser, SignedOut } from '@clerk/clerk-react'
-import DarkModeToggle from "react-dark-mode-toggle";
+import DarkModeToggle from 'react-dark-mode-toggle'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-
 
 const NavLink = (props) => (
     <Link
@@ -94,9 +93,9 @@ export default function Simple() {
                                 <WriterButton />
                                 <AdminButton />
                             </SignedIn>
-							<SignedOut>
-								<NavLink href={'/sign-in'}>Log In</NavLink>
-							</SignedOut>
+                            <SignedOut>
+                                <NavLink href={'/sign-in'}>Log In</NavLink>
+                            </SignedOut>
                             <Button
                                 px={2}
                                 py={1}
@@ -109,7 +108,6 @@ export default function Simple() {
                             >
                                 Switch Color Scheme
                             </Button>
-							
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
@@ -126,9 +124,9 @@ export default function Simple() {
                                 <WriterButton />
                                 <AdminButton />
                             </SignedIn>
-							<SignedOut>
-								<NavLink href={'/log-in'}>Log In</NavLink>
-							</SignedOut>
+                            <SignedOut>
+                                <NavLink href={'/sign-in'}>Log In</NavLink>
+                            </SignedOut>
                             {/* <DarkModeToggle
                                 onChange={toggleColorMode}
                                 checked={}
