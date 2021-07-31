@@ -21,6 +21,7 @@ import ArticleList from './ArticleList'
 import Image from 'next/image'
 import Link from 'next/link'
 import { EditIcon } from '@chakra-ui/icons'
+import '../styles/analytics.module.css'
 
 export function ArticleCard({ article }) {
     return (
@@ -71,7 +72,13 @@ export const AdminPage = () => {
 
                 <TabPanels>
                     <TabPanel>
-                        <p>one!</p>
+                        <Link
+                            href={
+                                'https://analytics.cowingtonpost.tk/share/cowingtonpost.tk?auth=1f5emhiblC-Hh-qcSUI3u'
+                            }
+                        >
+                            Click here for analytics
+                        </Link>
                     </TabPanel>
                     <TabPanel>
                         {data && (
