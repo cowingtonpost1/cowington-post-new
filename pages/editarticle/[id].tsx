@@ -98,7 +98,7 @@ export const EditArticle = (props) => {
 
                             axios({
                                 method: 'post',
-                                url: server + '/api/writer/addArticle',
+                                url: server + '/api/updateArticle',
                                 data: {
                                     posted: posted,
                                     _id: props.article._id,

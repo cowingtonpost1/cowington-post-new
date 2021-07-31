@@ -9,13 +9,11 @@ export default requireSession(async (req, res) => {
     } else {
         await dbConnect()
         const data = req.body
-        var articleQuery = await Article.findOne({ _id: data._id })
-        articleQuery.title = data.title
-        articleQuery.content = data.content
-        articleQuery.posted = data.posted
-        articleQuery.topic = data.topic
-        articleQuery.update()
+        console.log(data)
+        const articleQuery = await Article.updateOne({ _id: data._id }, data)
         const redis = redisConnect()
         redis.del('/api/topic/' + data.topic)
+        redis.del('/api/article/' + data._id)
+        res.status(200).send({ success: true })
     }
 })
