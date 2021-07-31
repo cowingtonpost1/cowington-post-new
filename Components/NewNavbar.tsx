@@ -120,6 +120,7 @@ export default function Simple() {
                         <Stack as={'nav'} spacing={4}>
                             <NavLink href={'/'}>All Topics</NavLink>
                             <NavLink href={'/topic/cow'}>Cow News</NavLink>
+                            <NavLink href={'/images'}>Cow Images</NavLink>
                             <SignedIn>
                                 <WriterButton />
                                 <AdminButton />
