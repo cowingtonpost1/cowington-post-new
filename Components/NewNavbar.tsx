@@ -122,7 +122,18 @@ export default function Simple() {
                                 checked={}
                                 size={80}
                             /> */}
-                            <DarkModeToggle onChange={toggleColorMode} checked={useColorModeValue(false,true)} />
+                            <Button
+                                px={2}
+                                py={1}
+                                rounded={'md'}
+                                _hover={{
+                                    textDecoration: 'none',
+                                    bg: buttonBgColor,
+                                }}
+                                onClick={toggleColorMode}
+                            >
+                                Switch Color Scheme
+                            </Button>
                         </Stack>
                     </Box>
                 ) : null}
