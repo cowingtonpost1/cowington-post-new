@@ -96,18 +96,7 @@ export default function Simple() {
                             <SignedOut>
                                 <NavLink href={'/sign-in'}>Log In</NavLink>
                             </SignedOut>
-                            <Button
-                                px={2}
-                                py={1}
-                                rounded={'md'}
-                                _hover={{
-                                    textDecoration: 'none',
-                                    bg: buttonBgColor,
-                                }}
-                                onClick={toggleColorMode}
-                            >
-                                Switch Color Scheme
-                            </Button>
+                            <DarkModeToggle onChange={toggleColorMode} checked={useColorModeValue(false,true)} />
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
@@ -133,18 +122,7 @@ export default function Simple() {
                                 checked={}
                                 size={80}
                             /> */}
-                            <Button
-                                px={2}
-                                py={1}
-                                rounded={'md'}
-                                _hover={{
-                                    textDecoration: 'none',
-                                    bg: buttonBgColor,
-                                }}
-                                onClick={toggleColorMode}
-                            >
-                                Switch Color Scheme
-                            </Button>
+                            <DarkModeToggle onChange={toggleColorMode} checked={useColorModeValue(false,true)} />
                         </Stack>
                     </Box>
                 ) : null}
