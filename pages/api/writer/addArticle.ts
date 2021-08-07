@@ -26,6 +26,7 @@ export const transporter = nodemailer.createTransport({
 export default requireSession(async (req, res) => {
     await dbConnect()
     const data: RequestData = req.body
+    console.log(req)
     // data.content = sanitizeHtml(data.content)
     // data.content = sanitizeHtml(data.content, {
     // allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),

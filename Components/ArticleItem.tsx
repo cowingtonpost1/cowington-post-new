@@ -3,7 +3,7 @@ import articleStyles from '../styles/Article.module.css'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Card, Row, Container } from 'react-bootstrap'
-
+import { motion } from 'framer-motion'
 // interface Article {
 // title: string;
 // date_posted: Date;
@@ -13,8 +13,8 @@ import { Card, Row, Container } from 'react-bootstrap'
 function ArticleItem({ article }) {
     console.log(article)
     return (
-        <>
-            <Link href="/article/[id]" as={`/article/${article._id}`}>
+        <motion.div whileHover={{scale: 1.1}}>
+            <Link href="/article/[id]" as={`/article/${article._id}`} passHref>
                 <Card style={{ width: '32rem', margin: 'auto' }}>
                     <Card.Body>
                         <h2>{article.title}</h2>
@@ -22,7 +22,7 @@ function ArticleItem({ article }) {
                     </Card.Body>
                 </Card>
             </Link>
-        </>
+        </motion.div>
     )
 }
 export default ArticleItem
