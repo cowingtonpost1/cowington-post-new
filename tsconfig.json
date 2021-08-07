@@ -23,7 +23,7 @@
 		"next-env.d.ts",
 		"**/*.ts",
 		"**/*.tsx"
-, "pages/writer.tsx", "pages/sign-in/[[...index]].js"	],
+, "pages/writer.tsx", "pages/sign-in/[[...index]].js", "libs/apollo.js"	],
 	"exclude": [
 		"node_modules"
 	]
