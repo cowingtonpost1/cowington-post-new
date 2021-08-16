@@ -4,15 +4,15 @@ import { server } from '../config/index'
 import { Image, SimpleGrid, Box } from '@chakra-ui/react'
 import { client } from '../utils/urql'
 import { gql } from 'urql'
-export const images = (props) => {
-    console.log(props.imgs)
+import { ImagesDocument } from '../generated/graphql.d'
+export const images = ({ images }) => {
     return (
         <>
             <SimpleGrid>
-                {props.imgs.map((image) => (
+                {images.map((image) => (
                     <Box key={image.url} maxWidth={600} maxHeight={800}>
                         <Image
-                            alt={'Cow image'}
+                            alt={''}
                             src={image.url}
                             maxWidth={600}
                             maxHeight={800}
@@ -26,20 +26,10 @@ export const images = (props) => {
 
 export async function getServerSideProps(content) {
     // const res = await fetch(server + `/api/art
-    const Query = gql`
-        query Images {
-            images {
-                _id
-                date_created
-                posted
-                url
-            }
-        }
-    `
-    const images = await client.query(Query).toPromise()
+    const images = await client.query(ImagesDocument).toPromise()
     return {
         props: {
-            imgs: images.data.images,
+            images: images.data.images,
         },
     }
 }

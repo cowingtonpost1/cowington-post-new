@@ -1,32 +1,35 @@
 import React from 'react'
 import { useSession, SignedIn } from '@clerk/clerk-react'
+import { useCreateArticleMutation } from '../generated/graphql.d'
 
 const Test = () => {
     const session = useSession()
-    const sessionId = session?.id
+    const [, createArticle] = useCreateArticleMutation()
+
     return (
-        <div>
+        <>
             <button
                 onClick={async () => {
-                    const baseUrl = 'http://localhost:5000/'
-                    const reqUrl = `${baseUrl}?_clerk_session_id=${sessionId}`
-                    const res = await fetch(reqUrl, {
-                        credentials: 'include', // Include cookies
+                    const response = await createArticle({
+                        title: 'test',
+                        content: 'test',
+                        topic: 'test',
                     })
+                    console.log(response)
                 }}
             >
-                Click Me
+                Click Me!
             </button>
-        </div>
+        </>
     )
 }
 
 const TestWrapper = () => {
-	return (
-		<SignedIn>
-			<Test />
-		</SignedIn>
-	)
+    return (
+        <SignedIn>
+            <Test />
+        </SignedIn>
+    )
 }
 
 export default TestWrapper

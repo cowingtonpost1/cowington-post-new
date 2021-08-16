@@ -1,15 +1,20 @@
 import { Button, Box, SimpleGrid, Input } from '@chakra-ui/react'
 import { useAlert } from 'react-alert'
+import { useSession } from '@clerk/clerk-react'
 export default function Upload() {
+    const session = useSession()
     const alert = useAlert()
     const uploadPhoto = async (e) => {
-        var file = e.target.files[0]
+        const file = e.target.files[0]
         const filename = encodeURIComponent(file.name)
-        const res = await fetch(`/api/post-image?file=${filename}`)
+        const res = await fetch(`/api/post-image?file=${filename}`, {
+            method: 'POST',
+        })
         const { url, fields } = await res.json()
         const formData = new FormData()
 
         Object.entries({ ...fields, file }).forEach(([key, value]) => {
+            //@ts-ignore
             formData.append(key, value)
         })
 
@@ -19,11 +24,9 @@ export default function Upload() {
         })
 
         if (upload.ok) {
-            console.log('Uploaded successfully!', { type: 'success' })
-            alert.show('Uploaded Successfully')
+            alert.success('Upload Successful.')
         } else {
-            console.error('Upload failed.')
-            alert.show('Upload Failed', { type: 'error' })
+            alert.error('Upload failed.')
         }
     }
 
@@ -33,7 +36,7 @@ export default function Upload() {
             <Input
                 type="file"
                 onChange={uploadPhoto}
-                accept="image/png, image/jpeg image/heic"
+                accept="image/png, image/jpeg image/heic image/jpg"
             />
         </SimpleGrid>
     )

@@ -1,13 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from 'next-auth/client'
 import Article from '../../../models/article.model'
-import { requireSession, users } from '@clerk/clerk-sdk-node'
+import { requireSession, RequireSessionProp, users } from '@clerk/clerk-sdk-node'
 import dbConnect from '../../../utils/dbConnect'
-import { server } from '../../../config/index'
+import { server } from '../../../config'
 import nodemailer from 'nodemailer'
 import VerificationToken from '../../../models/verificationtoken.model'
 import redisConnect from '../../../utils/redisConnect'
-import sanitizeHtml from 'sanitize-html'
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
@@ -23,7 +21,8 @@ export const transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_SERVER_PASSWORD,
     },
 })
-export default requireSession(async (req, res) => {
+export default requireSession(async (req: RequireSessionProp<NextApiRequest>, res: NextApiResponse) => {
+    console.log("Headers: " + req.headers)
     await dbConnect()
     const data: RequestData = req.body
     console.log(req)
@@ -82,7 +81,7 @@ export default requireSession(async (req, res) => {
                             data.content
                         } <a href=${
                             server + '/api/verify/' + acceptToken
-                        }>Click this link to accept the article</a><br></br><a href=${
+                        }>Click this link to accept the article</a><br/><a href=${
                             server + '/api/verify/' + denyToken
                         }>Click this link to deny the article</a>`,
                     },

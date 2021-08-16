@@ -2,6 +2,7 @@ import '../styles/globals.css'
 import Layout from '../Components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import '../styles/globals.css'
+import { Provider as UrqlProvider } from 'urql'
 import {
     ClerkProvider,
     RedirectToSignIn,
@@ -18,6 +19,7 @@ import {
     CloseButton,
 } from '@chakra-ui/react'
 import { Provider as AlertProvider } from 'react-alert'
+import { client } from '../utils/urql'
 
 // Retrieve Clerk settings from the environment
 const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API
@@ -55,29 +57,31 @@ function MyApp({ Component, pageProps }) {
      * Otherwise, use Clerk to require authentication.
      */
     return (
-        <ChakraProvider>
-            <ClerkProvider
-                frontendApi={clerkFrontendApi}
-                navigate={(to) => router.push(to)}
-            >
-                <AlertProvider template={AlertTemplate}>
-                    <Layout>
-                        {!privatePages.includes(router.pathname) ? (
-                            <Component {...pageProps} />
-                        ) : (
-                            <>
-                                <SignedIn>
-                                    <Component {...pageProps} />
-                                </SignedIn>
-                                <SignedOut>
-                                    <RedirectToSignIn />
-                                </SignedOut>
-                            </>
-                        )}
-                    </Layout>
-                </AlertProvider>
-            </ClerkProvider>
-        </ChakraProvider>
+        <UrqlProvider value={client}>
+            <ChakraProvider>
+                <ClerkProvider
+                    frontendApi={clerkFrontendApi}
+                    navigate={(to) => router.push(to)}
+                >
+                    <AlertProvider template={AlertTemplate}>
+                        <Layout>
+                            {!privatePages.includes(router.pathname) ? (
+                                <Component {...pageProps} />
+                            ) : (
+                                <>
+                                    <SignedIn>
+                                        <Component {...pageProps} />
+                                    </SignedIn>
+                                    <SignedOut>
+                                        <RedirectToSignIn />
+                                    </SignedOut>
+                                </>
+                            )}
+                        </Layout>
+                    </AlertProvider>
+                </ClerkProvider>
+            </ChakraProvider>
+        </UrqlProvider>
     )
 }
 

@@ -1,0 +1,3 @@
+mutation createArticle($title: String! $content: String! $topic: String!) {
+    createArticle(title: $title topic: $topic content: $content)
+}

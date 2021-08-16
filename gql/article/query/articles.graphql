@@ -1,0 +1,11 @@
+query Articles($topic: String!) {
+    articles(topic: $topic) {
+        _id
+        title
+        topic
+        content
+        date_created
+        date_posted
+        posted
+    }
+}

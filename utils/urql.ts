@@ -1,6 +1,6 @@
-import { createClient } from '@urql/core'
+import { createClient } from 'urql'
 import { server } from '../config'
 
 export const client = createClient({
-    url: server+'/api/graphql',
+    url: server + '/api/graphql/',
 })

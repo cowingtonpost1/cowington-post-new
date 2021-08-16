@@ -1,0 +1,9 @@
+query Images {
+    images {
+        _id
+        date_created
+        date_posted
+        posted
+        url
+    }
+}
