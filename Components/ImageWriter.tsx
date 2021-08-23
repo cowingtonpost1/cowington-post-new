@@ -37,7 +37,7 @@ export default function Upload() {
             <Input
                 type="file"
                 onChange={uploadPhoto}
-                accept="image/png, image/jpeg image/heic image/jpg image"
+                accept="image/png, image/jpeg"
             />
         </SimpleGrid>
     )
