@@ -14,11 +14,10 @@ export const transporter = nodemailer.createTransport({
     },
 })
 export default requireSession(async function handler(req, res) {
-    // const Conditions = [
-    //     { acl: 'public-read' },
-    //     { bucket: 'cowington-post-files' },
-    //     ['content-length-range', 0, 10048576],
-    // ]
+    const Conditions = [
+        { acl: 'public-read' },
+        { bucket: 'cowington-post-files' },
+    ]
     await dbConnect()
     console.assert(req.query.file)
     const user = users.getUser(req.session.userId)
@@ -51,7 +50,7 @@ export default requireSession(async function handler(req, res) {
             req.query.file
         const post = await s3.createPresignedPost({
             Bucket: process.env.AWS_STORAGE_BUCKET_NAME_COW,
-            // Conditions,
+            Conditions,
             Fields: {
                 Key: filename,
                 ACL: 'public-read',

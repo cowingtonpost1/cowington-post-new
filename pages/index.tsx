@@ -12,7 +12,10 @@ export default function Home() {
             {/* <NewTopicCard title="Cow news" image="/cowimg.png" /> */}
             {/* <NewTopicCard2 title="Cow news" image="/cowimg.png" /> */}
             {/* <NewTopicCard3 title="Cow news" image="/cowimg.png" /> */}
-            <motion.div whileHover={{ scale: 1.1 }} initial={{ scale: 1 }}>
+            <motion.div
+                whileHover={{ scale: 1.1, cursor: 'pointer' }}
+                initial={{ scale: 1 }}
+            >
                 <Box
                     p={2}
                     minWidth={minimumWidth}
@@ -26,7 +29,10 @@ export default function Home() {
                     />
                 </Box>
             </motion.div>
-            <motion.div whileHover={{ scale: 1.1 }} initial={{ scale: 1 }}>
+            <motion.div
+                whileHover={{ scale: 1.1, cursor: 'pointer' }}
+                initial={{ scale: 1 }}
+            >
                 <Box p={2} minWidth={minimumWidth} maxWidth={maximumWidth}>
                     <NewTopicCard4
                         title="Computer News"

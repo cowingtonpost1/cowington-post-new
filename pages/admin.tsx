@@ -9,7 +9,7 @@ import {
     SimpleGrid,
 } from '@chakra-ui/react'
 import { server } from '../config/index'
-import { useUser, SignedIn } from '@clerk/clerk-react'
+import { useUser, SignedIn } from '@clerk/nextjs'
 import React from 'react'
 import Admin from '../Components/AdminPage'
 
@@ -20,8 +20,5 @@ const AdminWrapper = () => {
         </SignedIn>
     )
 }
-
-
-
 
 export default AdminWrapper

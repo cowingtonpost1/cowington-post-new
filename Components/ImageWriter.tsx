@@ -1,6 +1,6 @@
 import { Button, Box, SimpleGrid, Input } from '@chakra-ui/react'
 import { useAlert } from 'react-alert'
-import { useSession } from '@clerk/clerk-react'
+import { useSession } from '@clerk/nextjs'
 export default function Upload() {
     const session = useSession()
     const alert = useAlert()
@@ -9,7 +9,7 @@ export default function Upload() {
         const filename = encodeURIComponent(file.name)
         console.log(filename)
         const res = await fetch(`/api/post-image/?file=${filename}`, {
-            method: 'POST',
+            // method: 'POST',
         })
         const { url, fields } = await res.json()
         const formData = new FormData()

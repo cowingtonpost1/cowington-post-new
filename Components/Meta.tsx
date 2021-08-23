@@ -7,7 +7,7 @@ const Meta = ({ title, keywords, description }) => {
                 defer
                 data-domain="cowingtonpost.tk"
                 src="https://analytics.cowingtonpost.tk/js/plausible.js"
-            ></script>
+            />
 
             <meta
                 name="viewport"

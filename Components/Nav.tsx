@@ -1,16 +1,14 @@
 import React from 'react'
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap'
 import Link from 'next/link'
-import { SignedIn, SignedOut, UserButton, useUser } from '@clerk/clerk-react'
+import { SignedIn, SignedOut, UserButton, useUser } from '@clerk/nextjs'
 
 const WriterButton = () => {
     const user = useUser()
     return (
         <div>
-            {(user.publicMetadata.writer||user.publicMetadata.admin)&&(
-                <Nav.Link href="/writer">
-                    Writer
-                </Nav.Link>
+            {(user.publicMetadata.writer || user.publicMetadata.admin) && (
+                <Nav.Link href="/writer">Writer</Nav.Link>
             )}
         </div>
     )
@@ -19,10 +17,8 @@ const AdminButton = () => {
     const user = useUser()
     return (
         <>
-            {(user.publicMetadata.admin)&&(
-                <Nav.Link href="/admin">
-                    Admin
-                </Nav.Link>
+            {user.publicMetadata.admin && (
+                <Nav.Link href="/admin">Admin</Nav.Link>
             )}
         </>
     )
@@ -32,22 +28,22 @@ function CowingtonNavbar() {
     return (
         <div>
             <Navbar bg="light" expand="lg">
-                    <Navbar.Brand>
-                        <Link href="/">Cowington Post</Link>
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav">
-                        <Nav className="me-auto">
-                            <Nav.Link href="/">All topics</Nav.Link>
-                            <Nav.Link href="/topic/cow">Cow News</Nav.Link>
-                            <SignedOut>
-                                <Nav.Link href="/sign-in">Log in</Nav.Link>
-                            </SignedOut>
-                            <SignedIn>
-                                <WriterButton />
-                                <AdminButton/>
-                            </SignedIn>
-                            {/* <NavDropdown
+                <Navbar.Brand>
+                    <Link href="/">Cowington Post</Link>
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href="/">All topics</Nav.Link>
+                        <Nav.Link href="/topic/cow">Cow News</Nav.Link>
+                        <SignedOut>
+                            <Nav.Link href="/sign-in">Log in</Nav.Link>
+                        </SignedOut>
+                        <SignedIn>
+                            <WriterButton />
+                            <AdminButton />
+                        </SignedIn>
+                        {/* <NavDropdown
                                 title="Dropdown"
                                 id="basic-nav-dropdown"
                             >
@@ -65,11 +61,11 @@ function CowingtonNavbar() {
                                     Separated link
                                 </NavDropdown.Item>
                             </NavDropdown> */}
-                        </Nav>
-                        <Nav>
-                            <UserButton></UserButton>
-                        </Nav>
-                    </Navbar.Collapse>
+                    </Nav>
+                    <Nav>
+                        <UserButton></UserButton>
+                    </Nav>
+                </Navbar.Collapse>
             </Navbar>
         </div>
     )

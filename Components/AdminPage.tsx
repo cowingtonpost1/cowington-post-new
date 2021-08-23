@@ -14,7 +14,7 @@ import {
     IconButton,
 } from '@chakra-ui/react'
 import { server } from '../config/index'
-import { useUser, SignedIn } from '@clerk/clerk-react'
+import { useUser, SignedIn } from '@clerk/nextjs'
 import React from 'react'
 import useSWR from 'swr'
 import ArticleList from './ArticleList'
