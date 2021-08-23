@@ -8,7 +8,7 @@ import {
     RedirectToSignIn,
     SignedIn,
     SignedOut,
-} from '@clerk/clerk-react'
+} from '@clerk/nextjs'
 import { useRouter } from 'next/router'
 import {
     ChakraProvider,
@@ -22,7 +22,6 @@ import { Provider as AlertProvider } from 'react-alert'
 import { client } from '../utils/urql'
 
 // Retrieve Clerk settings from the environment
-const clerkFrontendApi = process.env.NEXT_PUBLIC_CLERK_FRONTEND_API
 
 /**
  * List pages you want to be publicly accessible, or leave empty if
@@ -56,13 +55,11 @@ function MyApp({ Component, pageProps }) {
      * If the current route is listed as public, render it directly.
      * Otherwise, use Clerk to require authentication.
      */
+    // @ts-ignore
     return (
         <UrqlProvider value={client}>
             <ChakraProvider>
-                <ClerkProvider
-                    frontendApi={clerkFrontendApi}
-                    navigate={(to) => router.push(to)}
-                >
+                <ClerkProvider>
                     <AlertProvider template={AlertTemplate}>
                         <Layout>
                             {!privatePages.includes(router.pathname) ? (

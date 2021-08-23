@@ -1,4 +1,4 @@
-import { requireSession, users } from '@clerk/clerk-sdk-node'
+import { requireSession, users } from '@clerk/nextjs/api'
 import dbConnect from '../../utils/dbConnect'
 import Article from '../../models/article.model'
 import redisConnect from '../../utils/redisConnect'

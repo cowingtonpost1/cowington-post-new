@@ -8,7 +8,8 @@ import { Form, Button } from 'react-bootstrap'
 import axios from 'axios'
 import { server } from '../config/index'
 import { Select, Box, Input } from '@chakra-ui/react'
-import {useAlert} from 'react-alert'
+import { useAlert } from 'react-alert'
+import { useUser } from '@clerk/nextjs'
 
 const modules = {
     ImageResize: {},
@@ -51,9 +52,8 @@ const formats = [
     'video',
 ]
 
-
-
 export const WriterPage = () => {
+    const user = useUser()
     const myRef = useRef()
     const [text, setText] = useState('')
     const [selection, setSelection] = useState('cow')
@@ -61,7 +61,7 @@ export const WriterPage = () => {
     // console.log(quill)
     // Quill.register('modules/imageResize', ImageResize)
 
-    const { quill, quillRef } = useQuill({theme: "snow"})
+    const { quill, quillRef } = useQuill({ theme: 'snow' })
     const alert = useAlert()
     // Insert Image(selected by user) to quill
 
@@ -125,11 +125,18 @@ export const WriterPage = () => {
                                 },
                             })
                                 .then((err) => {
-                                    alert.show("Your article has been submitted for review.")
-                                    console.log(err)
+                                    if (user.publicMetadata.admin) {
+                                        alert.success(
+                                            'Your article has been posted!'
+                                        )
+                                    } else {
+                                        alert.success(
+                                            'Your article has been submitted for review.'
+                                        )
+                                    }
                                 })
                                 .catch((err) => {
-                                    alert.show("An Error occured.")
+                                    alert.show('An Error occured.')
                                     console.log(err)
                                 })
                         }}

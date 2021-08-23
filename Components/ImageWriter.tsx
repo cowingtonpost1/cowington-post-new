@@ -7,7 +7,8 @@ export default function Upload() {
     const uploadPhoto = async (e) => {
         const file = e.target.files[0]
         const filename = encodeURIComponent(file.name)
-        const res = await fetch(`/api/post-image?file=${filename}`, {
+        console.log(filename)
+        const res = await fetch(`/api/post-image/?file=${filename}`, {
             method: 'POST',
         })
         const { url, fields } = await res.json()
@@ -36,7 +37,7 @@ export default function Upload() {
             <Input
                 type="file"
                 onChange={uploadPhoto}
-                accept="image/png, image/jpeg image/heic image/jpg"
+                accept="image/png, image/jpeg image/heic image/jpg image"
             />
         </SimpleGrid>
     )

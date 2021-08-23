@@ -10,7 +10,7 @@ import {
     sessions,
     clients,
     requireSession,
-} from '@clerk/clerk-sdk-node'
+} from '@clerk/nextjs/api'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { IncomingMessage } from 'http'
 import Cookies from 'cookies'
@@ -96,10 +96,10 @@ const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
     context: async ({ req, res }) => {
-        // return await requireSession((req: WithSessionProp<any>, res: any) => {
-        //     console.log(req.session)
-        //     return { session: req.session }
-        // })(req, res)
+        return await withSession((req: WithSessionProp<any>, res: any) => {
+            console.log(req.session)
+            return { session: req.session }
+        })(req, res)
         // const cookies = new Cookies(req, res)
         // const sessionToken = cookies.get('__session')
         // const c = await clients.getClientList()
