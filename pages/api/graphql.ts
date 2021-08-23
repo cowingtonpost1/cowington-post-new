@@ -47,7 +47,7 @@ const resolvers = {
         async images() {
             const image: any = await getOrSetCache('gql:/images/', async () => {
                 await dbConnect()
-                return Image.find({})
+                return Image.find({}).sort({ date_posted: 'desc' })
             })
             return image
         },
