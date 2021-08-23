@@ -55,7 +55,7 @@ export default requireSession(async function handler(req, res) {
                 Key: filename,
                 ACL: 'public-read',
             },
-            Expires: 60, // seconds
+            Expires: 120, // seconds
         })
         console.log(post)
         const isPosted = user2.publicMetadata.admin || false
