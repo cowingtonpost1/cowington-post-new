@@ -78,7 +78,7 @@ export type ArticleQueryVariables = Exact<{
 }>;
 
 
-export type ArticleQuery = { __typename?: 'Query', article?: Maybe<{ __typename?: 'Article', _id: string, title: string, topic: string, content: string, date_posted?: Maybe<string>, date_created: string }> };
+export type ArticleQuery = { __typename?: 'Query', article?: Maybe<{ __typename?: 'Article', _id: string, title: string, topic: string, content: string, posted?: Maybe<boolean>, date_posted?: Maybe<string>, date_created: string }> };
 
 export type ArticlesQueryVariables = Exact<{
   topic: Scalars['String'];
@@ -114,6 +114,7 @@ export const ArticleDocument = gql`
     title
     topic
     content
+    posted
     date_posted
     date_created
   }

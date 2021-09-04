@@ -13,6 +13,7 @@ export default requireSession(async (req, res) => {
         const articleQuery = await Article.updateOne({ _id: data._id }, data)
         const redis = redisConnect()
         redis.del('/api/topic/' + data.topic)
+        redis.del('gql:/articles/' + data.topic+'/')
         redis.del('/api/article/' + data._id)
         res.status(200).send({ success: true })
     }

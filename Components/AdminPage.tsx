@@ -9,16 +9,14 @@ import {
     Center,
     Text,
     Stack,
-    SimpleGrid,
     useColorModeValue,
     IconButton,
+    Button,
 } from '@chakra-ui/react'
 import { server } from '../config/index'
-import { useUser, SignedIn } from '@clerk/nextjs'
+import { useUser } from '@clerk/nextjs'
 import React from 'react'
 import useSWR from 'swr'
-import ArticleList from './ArticleList'
-import Image from 'next/image'
 import Link from 'next/link'
 import { EditIcon } from '@chakra-ui/icons'
 import '../styles/analytics.module.css'
@@ -57,8 +55,73 @@ export function ArticleCard({ article }) {
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
+interface Application {
+    userId: string
+    name: string
+    age: number
+    reason1: boolean
+    reason2: boolean
+    reason3: boolean
+}
+
+export const ApplicationCard: React.FC<{ application: Application }> = (
+props
+) => {
+    return (
+        <>
+            <h1>Name: {props.application.name}</h1>
+            <h1>Age: {props.application.age}</h1>
+            <h1>I like cows: {(props.application.reason1 && 'Yes') || 'No'}</h1>
+            <h1>
+                I like the Cowington Post:{' '}
+                {(props.application.reason2 && 'Yes') || 'No'}
+            </h1>
+            <h1>
+                I like to write stories about cows:{' '}
+                {(props.application.reason3 && 'Yes') || 'No'}
+            </h1>
+
+            <Button
+                onClick={async () => {
+                    const res = await fetch(
+                        server + '/api/application/accept',
+                        {
+                            method: 'POST',
+                            body: JSON.stringify(props.application),
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        }
+                    )
+                }}
+            >
+                Accept
+            </Button>
+            </>
+    )
+}
+
+export const ApplicationsPage: React.FC = () => {
+    const { data, error } = useSWR('/api/applications')
+    console.log(data)
+    if (data) {
+        return (
+            <>
+                {data.map((application) => (
+                    <ApplicationCard
+                        key={application._id}
+                        application={application as Application}
+                        />
+                ))}
+                </>
+        )
+    } else {
+        return <h1>An error occurred.</h1>
+    }
+}
+
 export const AdminPage = () => {
-    const { data, error } = useSWR('/api/articles/', fetcher)
+    const { data } = useSWR('/api/articles/', fetcher)
     const user = useUser()
     if (!user.publicMetadata.admin) {
         return <Heading>Permission Denied</Heading>
@@ -67,14 +130,16 @@ export const AdminPage = () => {
             <Tabs>
                 <TabList>
                     <Tab>Analytics</Tab>
-                    <Tab>Unverified Articles</Tab>
+                    <Tab>Articles</Tab>
+                    <Tab>Users</Tab>
+                    <Tab>Unaccepted Applications</Tab>
                 </TabList>
 
                 <TabPanels>
                     <TabPanel>
                         <Link
                             href={
-                                'https://analytics.cowingtonpost.tk/share/cowingtonpost.tk?auth=1f5emhiblC-Hh-qcSUI3u'
+                            'https://analytics.cowingtonpost.tk/share/cowingtonpost.tk?auth=1f5emhiblC-Hh-qcSUI3u'
                             }
                         >
                             Click here for analytics
@@ -92,14 +157,20 @@ export const AdminPage = () => {
                                         {article.content}
                                     </ArticleCard>
                                 ))}
-                            </>
+                                </>
                         )}
-                        {/* {data.map((article) => (
-                                <Box key={article._id}>
-                                    <h2>{article.title}</h2>
-                                </Box>
-                            ))} */}
+{/* {data.map((article) => (
+<Box key={article._id}>
+<h2>{article.title}</h2>
+</Box>
+                        ))} */}
                         {/* <ArticleList articles={data} /> */}
+                    </TabPanel>
+                    <TabPanel>
+                        <h1>Coming Soon</h1>
+                    </TabPanel>
+                    <TabPanel>
+                        <ApplicationsPage />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

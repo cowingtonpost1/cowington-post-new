@@ -47,11 +47,13 @@ const resolvers = {
         async images() {
             const image: any = await getOrSetCache('gql:/images/', async () => {
                 await dbConnect()
-                return Image.find({}).sort({ date_posted: 'desc' })
+                return Image.find({ posted: true }).sort({
+                    date_posted: 'desc',
+                })
             })
             return image
         },
-        async article(parent, args) {
+        async article(_parent: any, args: any) {
             const article: any = await getOrSetCache(
                 'gql:/article/' + args.id,
                 async () => {
@@ -67,6 +69,7 @@ const resolvers = {
                 'gql:/articles/' + args.topic,
                 async () => {
                     await dbConnect()
+                    console.log("MOOOO")
                     return Article.find({
                         topic: args.topic,
                         posted: true,

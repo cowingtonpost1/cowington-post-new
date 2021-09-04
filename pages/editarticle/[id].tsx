@@ -7,11 +7,12 @@ import axios from 'axios'
 import { server } from '../../config/index'
 import { Select, Box, Input, Checkbox } from '@chakra-ui/react'
 import { useAlert } from 'react-alert'
+import { client } from '../../utils/urql'
+import { ArticleDocument } from '../../generated/graphql.d'
 
 export const EditArticle = (props) => {
-    console.log(typeof props.article._id)
     const myRef = useRef(props.article.title)
-    const [posted, setPosted] = useState(false)
+    const [posted, setPosted] = useState(props.article.posted || true)
     // setPosted(props.article.posted)
     const [text, setText] = useState('')
     const [selection, setSelection] = useState(props.article.topic)
@@ -30,6 +31,7 @@ export const EditArticle = (props) => {
             quill.clipboard.dangerouslyPasteHTML(props.article.content)
         }
     }, [quill])
+
     const alert = useAlert()
     // Insert Image(selected by user) to quill
 
@@ -107,13 +109,12 @@ export const EditArticle = (props) => {
                                 },
                             })
                                 .then((err) => {
-                                    alert.show(
-                                        'Your article has been submitted for review.'
+                                    alert.success(
+                                        'Article Edited Successfully!'
                                     )
-                                    console.log(err)
                                 })
                                 .catch((err) => {
-                                    alert.show('An Error occured.')
+                                    alert.error('An Error occured.')
                                     console.log(err)
                                 })
                         }}
@@ -127,10 +128,15 @@ export const EditArticle = (props) => {
 }
 export const getServerSideProps = async (context) => {
     const res = await fetch(server + `/api/article/${context.params.id}`)
-    const article = await res.json()
+    // const article = await res.json()
+    const article = await client
+        .query(ArticleDocument, {
+            id: context.params.id,
+        })
+        .toPromise()
     return {
         props: {
-            article,
+            article: article.data.article,
         },
     }
 }

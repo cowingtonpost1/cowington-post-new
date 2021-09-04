@@ -4,6 +4,7 @@ query Article($id: ID!) {
         title
         topic
         content
+        posted
         date_posted
         date_created
     }
