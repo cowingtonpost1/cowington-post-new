@@ -13,7 +13,10 @@ import { motion } from 'framer-motion'
 
 export default function BlogPostWithImage({ article }) {
     return (
-        <motion.div whileHover={{cursor: 'pointer'}}>
+        <motion.div
+            whileHover={{ cursor: 'pointer', scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+        >
             <Link href={'/article/' + article._id}>
                 <Center py={6}>
                     <Box

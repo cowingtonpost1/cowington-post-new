@@ -1,10 +1,18 @@
 import aws from 'aws-sdk'
 import { NextApiResponse, NextApiRequest } from 'next'
+import { requireSession, RequireSessionProp, users } from '@clerk/nextjs/api'
 
-export default async function handler(
-    req: NextApiRequest,
+export default requireSession(async function handler(
+    req: RequireSessionProp<NextApiRequest>,
     res: NextApiResponse
 ) {
+    if (req.session) {
+        const user = await users.getUser(req.session.userId)
+        if (!user.publicMetadata.writer && !user.publicMetadata.admin) {
+            res.status(401).send("Unauthorized")
+            return;
+        }
+    }
     aws.config.update({
         accessKeyId: process.env.AWS_ACCESS_KEY_ID_COW,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY_COW,
@@ -28,8 +36,8 @@ export default async function handler(
         ],
     })
 
-    res.status(200).json({imageURL: post.url+'/'+post.fields.key})
+    res.status(200).json({imageURL: post.url+'/'+post.fields.key, ...post})
 
     console.log(post)
     res.status(200)
-}
+})

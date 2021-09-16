@@ -1,8 +1,18 @@
 import NewTopicCard4 from '../Components/NewTopicCard4'
-import { Grid, Box, GridItem, Flex, Spacer } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import {
+    Grid,
+    Box,
+    GridItem,
+    Flex,
+    Spacer,
+    forwardRef,
+    BoxProps,
+} from '@chakra-ui/react'
+import { motion, isValidMotionProp } from 'framer-motion'
 const minimumWidth = '19rem'
 const maximumWidth = '19rem'
+
+const MotionBox = motion<BoxProps>(Box)
 
 export default function Home() {
     return (
@@ -12,35 +22,35 @@ export default function Home() {
             {/* <NewTopicCard title="Cow news" image="/cowimg.png" /> */}
             {/* <NewTopicCard2 title="Cow news" image="/cowimg.png" /> */}
             {/* <NewTopicCard3 title="Cow news" image="/cowimg.png" /> */}
-            <motion.div
+            <MotionBox
                 whileHover={{ scale: 1.1, cursor: 'pointer' }}
                 initial={{ scale: 1 }}
+                p={2}
+                minWidth={minimumWidth}
+                maxWidth={maximumWidth}
+                whileTap={{scale: 0.9}}
+                marginBottom={'2rem'}
             >
-                <Box
-                    p={2}
-                    minWidth={minimumWidth}
-                    maxWidth={maximumWidth}
-                    marginBottom={'2rem'}
-                >
-                    <NewTopicCard4
-                        title="Cow News"
-                        image="/cowimg.png"
-                        href="/topic/cow"
-                    />
-                </Box>
-            </motion.div>
-            <motion.div
+                <NewTopicCard4
+                    title="Cow News"
+                    image="/cowimg.png"
+                    href="/topic/cow"
+                />
+            </MotionBox>
+            <MotionBox
+                p={2}
+                minWidth={minimumWidth}
+                maxWidth={maximumWidth}
                 whileHover={{ scale: 1.1, cursor: 'pointer' }}
+                whileTap={{scale: 0.9}}
                 initial={{ scale: 1 }}
             >
-                <Box p={2} minWidth={minimumWidth} maxWidth={maximumWidth}>
-                    <NewTopicCard4
-                        title="Computer News"
-                        image="/computerimg.jpg"
-                        href="/topic/computer"
-                    />
-                </Box>
-            </motion.div>
+                <NewTopicCard4
+                    title="Computer News"
+                    image="/computerimg.jpg"
+                    href="/topic/computer"
+                />
+            </MotionBox>
         </Flex>
     )
 }

@@ -62,6 +62,62 @@ export const WriterPage = () => {
     // Quill.register('modules/imageResize', ImageResize)
 
     const { quill, quillRef } = useQuill({ theme: 'snow' })
+
+    const insertToEditor = (url) => {
+        const range = quill.getSelection()
+        quill.insertEmbed(range.index, 'image', url)
+    }
+
+    // Upload Image to Image Server such as AWS S3, Cloudinary, Cloud Storage, etc..
+    const saveToServer = async (file) => {
+        // const body = new FormData()
+        const formData = new FormData()
+        // body.append('file', file)
+        const filename = encodeURIComponent(file.name)
+        const res = await fetch(`/api/upload-image/?file=${filename}`, {
+            // method: 'POST',
+        })
+        const { url, fields, imageURL } = await res.json()
+        Object.entries({ ...fields, file }).forEach(([key, value]) => {
+            //@ts-ignore
+            formData.append(key, value)
+        })
+        const upload = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        })
+        // const res: any = await fetch(
+            // server + '/api/upload-image/?file=' + filename,
+            // {
+                // method: 'POST',
+                // body,
+            // }
+        // )
+        // const json = await res.json()
+        // insertToEditor(json.imageURL)
+        insertToEditor(imageURL)
+    }
+
+    // Open Dialog to select Image File
+    const selectLocalImage = () => {
+        const input = document.createElement('input')
+        input.setAttribute('type', 'file')
+        input.setAttribute('accept', 'image/*')
+        input.click()
+
+        input.onchange = () => {
+            const file = input.files[0]
+            saveToServer(file)
+        }
+    }
+
+    React.useEffect(() => {
+        if (quill) {
+            // Add custom handler for Image Upload
+            quill.getModule('toolbar').addHandler('image', selectLocalImage)
+        }
+    }, [quill])
+
     const alert = useAlert()
     // Insert Image(selected by user) to quill
 
