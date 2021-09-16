@@ -96,6 +96,7 @@ export default requireSession(
                     dbArticle.save()
                     const redis = redisConnect()
                     redis.del('/api/topic/' + dbArticle.topic)
+                    redis.del('gql:/articles/'+ dbArticle.topic)
                 }
                 res.status(200).json({ success: true })
             } catch (err) {

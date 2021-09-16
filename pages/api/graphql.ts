@@ -3,6 +3,10 @@ import Article from '../../models/article.model'
 import Image from '../../models/image.model'
 import dbConnect from '../../utils/dbConnect'
 import getOrSetCache from '../../utils/getOrSetCache'
+import { GraphQLScalarType } from 'graphql'
+import { Kind } from 'graphql/language'
+import { GraphQLDate, GraphQLTime, GraphQLDateTime } from 'graphql-iso-date'
+
 import {
     withSession,
     WithSessionProp,
@@ -16,6 +20,7 @@ import { IncomingMessage } from 'http'
 import Cookies from 'cookies'
 
 const typeDefs = gql`
+    scalar Date
     type Query {
         articles(topic: String!): [Article!]!
         article(id: ID!): Article
@@ -25,8 +30,8 @@ const typeDefs = gql`
         _id: ID!
         title: String!
         content: String!
-        date_created: String!
-        date_posted: String
+        date_created: Date!
+        date_posted: Date
         posted: Boolean
         topic: String!
     }
@@ -42,7 +47,25 @@ const typeDefs = gql`
     }
 `
 
+const dateScalar = new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    serialize(value) {
+        return value.getTime() // Convert outgoing Date to integer for JSON
+    },
+    parseValue(value) {
+        return new Date(value) // Convert incoming integer to Date
+    },
+    parseLiteral(ast) {
+        if (ast.kind === Kind.INT) {
+            return new Date(parseInt(ast.value, 10)) // Convert hard-coded AST string to integer and then to Date
+        }
+        return null // Invalid hard-coded value (not an integer)
+    },
+})
+
 const resolvers = {
+    Date: dateScalar,
     Query: {
         async images() {
             const image: any = await getOrSetCache('gql:/images/', async () => {
@@ -69,13 +92,15 @@ const resolvers = {
                 'gql:/articles/' + args.topic,
                 async () => {
                     await dbConnect()
-                    console.log("MOOOO")
+                    console.log('MOOOO')
                     return Article.find({
                         topic: args.topic,
                         posted: true,
                     }).sort({ date_posted: 'desc' })
                 }
             )
+            console.log(articles)
+
             return articles
         },
     },

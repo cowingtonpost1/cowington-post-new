@@ -7,10 +7,12 @@ import { ArticleDocument } from '../../generated/graphql.d'
 const Article = ({ article }) => {
     const router = useRouter()
     const { id } = router.query
+    const date = new Date(article.date_posted)
+
     return (
         <>
             <Heading>{article.title}</Heading>
-            <Text>Posted at {article.date_posted}</Text>
+            <Text>Posted at {date.toDateString()}</Text>
             <br></br>
             <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
             <br />

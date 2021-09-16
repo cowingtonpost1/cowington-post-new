@@ -12,6 +12,9 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 
 export default function BlogPostWithImage({ article }) {
+    const date = new Date(article.date_posted)
+    console.log(article.date_posted)
+
     return (
         <motion.div
             whileHover={{ cursor: 'pointer', scale: 1.1 }}
@@ -36,7 +39,7 @@ export default function BlogPostWithImage({ article }) {
                             >
                                 {article.title}
                             </Heading>
-                            <Text>Posted At {article.date_posted}</Text>
+                            <Text>Posted At {date.toDateString()}</Text>
                         </Stack>
                     </Box>
                 </Center>
