@@ -39,7 +39,7 @@ export default function BlogPostWithImage({ article }) {
                             >
                                 {article.title}
                             </Heading>
-                            <Text>Posted At {date.toDateString()}</Text>
+                            <Text>Posted On {date.toDateString()}</Text>
                         </Stack>
                     </Box>
                 </Center>
