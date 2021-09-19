@@ -21,8 +21,10 @@ import {
 import { SignedIn, UserButton, useUser, SignedOut } from '@clerk/nextjs'
 import DarkModeToggle from 'react-dark-mode-toggle'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-
+import NextLink from 'next/link'
+import {motion} from 'framer-motion'
 const NavLink = (props) => (
+    <motion.div whileTap={{size: 0.9}}>
     <Link
         px={2}
         py={1}
@@ -31,10 +33,13 @@ const NavLink = (props) => (
             textDecoration: 'none',
             bg: useColorModeValue('gray.200', 'gray.700'),
         }}
-        href={props.href}
     >
-        {props.children}
+        <NextLink href={props.href}>
+            {props.children}
+        </NextLink>
     </Link>
+
+    </motion.div>
 )
 const WriterButton = () => {
     const user = useUser()

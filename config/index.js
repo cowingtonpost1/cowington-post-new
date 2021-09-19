@@ -3,7 +3,7 @@ const dev = process.env.NODE_ENV !== 'production'
 
 export const server = dev
     ? 'http://localhost:3000'
-    : 'https://www.cowingtonpost.tk'
+    : 'https://www.cowingtonpost.com'
 export const db_url = process.env.MONGODB_URI
 // export const transporter = nodemailer.createTransport({
 // service: 'gmail',
