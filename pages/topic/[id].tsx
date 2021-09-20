@@ -28,13 +28,15 @@ export const NewsPage = ({ articles }) => {
 //     }
 // }
 export async function getServerSideProps(content) {
-    // const res = await fetch(server + `/api/articles/` id)
-    const articles = await client
-        .query(ArticlesDocument, { topic: content.params.id })
-        .toPromise()
+    const res = await fetch(server + `/api/topic/` + content.params.id)
+    const articles = await res.json()
+    // const articles = await client
+    // .query(ArticlesDocument, { topic: content.params.id })
+    // .toPromise()
     return {
         props: {
-            articles: articles.data.articles,
+            // articles: articles.data.articles,
+            articles: articles,
         },
     }
 }
