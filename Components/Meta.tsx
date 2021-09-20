@@ -5,7 +5,7 @@ const Meta = ({ title, keywords, description }) => {
             <script
                 async
                 defer
-                data-domain="cowingtonpost.tk"
+                data-domain="cowingtonpost.com"
                 src="https://analytics.cowingtonpost.tk/js/plausible.js"
             />
 
