@@ -107,11 +107,11 @@ function PrivacyPolicy() {
                         <strong>Website</strong> refers to Cowington Post,
                         accessible from
                         <a
-                            href="cowingtonpost.tk"
+                            href="cowingtonpost.com"
                             rel="external nofollow noopener"
                             target="_blank"
                         >
-                            cowingtonpost.tk
+                            cowingtonpost.com
                         </a>
                     </p>
                 </li>

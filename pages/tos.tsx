@@ -9,7 +9,7 @@ function tos() {
             <h2>1. Terms</h2>
 
             <p>
-                By accessing this Website, accessible from cowingtonpost.tk, you
+                By accessing this Website, accessible from cowingtonpost.com, you
                 are agreeing to be bound by these Website Terms and Conditions
                 of Use and agree that you are responsible for the agreement with
                 any applicable local laws. If you disagree with any of these
