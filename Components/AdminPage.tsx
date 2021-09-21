@@ -65,7 +65,7 @@ interface Application {
 }
 
 export const ApplicationCard: React.FC<{ application: Application }> = (
-props
+    props
 ) => {
     return (
         <>
@@ -97,7 +97,7 @@ props
             >
                 Accept
             </Button>
-            </>
+        </>
     )
 }
 
@@ -111,9 +111,9 @@ export const ApplicationsPage: React.FC = () => {
                     <ApplicationCard
                         key={application._id}
                         application={application as Application}
-                        />
+                    />
                 ))}
-                </>
+            </>
         )
     } else {
         return <h1>An error occurred.</h1>
@@ -122,6 +122,8 @@ export const ApplicationsPage: React.FC = () => {
 
 export const AdminPage = () => {
     const { data } = useSWR('/api/articles/', fetcher)
+    const url_data = useSWR('/api/analyticsurl/', fetcher).data
+    console.table(url_data)
     const user = useUser()
     if (!user.publicMetadata.admin) {
         return <Heading>Permission Denied</Heading>
@@ -137,13 +139,15 @@ export const AdminPage = () => {
 
                 <TabPanels>
                     <TabPanel>
-                        <Link
-                            href={
-                            'https://analytics.cowingtonpost.tk/share/cowingtonpost.tk?auth=1f5emhiblC-Hh-qcSUI3u'
-                            }
-                        >
-                            Click here for analytics
-                        </Link>
+                        {url_data && (
+                            <>
+                                <Link href={String(url_data.url)}>
+                                    Click here for analytics
+                                </Link>
+                                {/* <Text>{url_data.url}</Text> */}
+                            </>
+                        )}
+                        {!url_data && <Text>Loading...</Text>}
                     </TabPanel>
                     <TabPanel>
                         {data && (
@@ -153,13 +157,11 @@ export const AdminPage = () => {
                                     <ArticleCard
                                         article={article}
                                         key={article._id}
-                                    >
-                                        {article.content}
-                                    </ArticleCard>
+                                    ></ArticleCard>
                                 ))}
-                                </>
+                            </>
                         )}
-{/* {data.map((article) => (
+                        {/* {data.map((article) => (
 <Box key={article._id}>
 <h2>{article.title}</h2>
 </Box>
