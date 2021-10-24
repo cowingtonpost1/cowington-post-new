@@ -15,6 +15,7 @@ const WriterButton = () => {
 }
 const AdminButton = () => {
     const user = useUser()
+
     return (
         <>
             {user.publicMetadata.admin && (
